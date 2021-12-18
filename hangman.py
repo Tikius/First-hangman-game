@@ -19,23 +19,33 @@ def indexes2(my_list, desired_element):
 word = random.choice(word_list)
 
 #Generate the box for visuals
+print (word)
 box = ""
+box_item = "□"
 for n in word:
-    box = box + " □"
+    box = box + " " + box_item
    
 print ("Welcome to Hangman! Try to guess this word:")
 print(box)
 
 wrong = 0
 remaining_attempts = 6
-guess_storage = ""
+guess_storage = "".capitalize()
 
 #Play the game until 7 incorrect choices
 
 while wrong < 7:
     guess = input("Which letter are you going to guess?\n").lower()
-    indeksai = list(indexes2(word, guess))
-      
+    indeksai = [
+    index
+    for index, element in enumerate(list(word))
+    if element == guess
+    ]
+    if guess in guess_storage:
+       guess_storage = guess_storage + guess.capitalize() + ", "
+       if guess == guess_storage:
+           print ("You can't use the same letter again!")
+           continue  
   
     if guess in word:
         if len(indeksai) == 1:
@@ -53,7 +63,7 @@ while wrong < 7:
            print("Congratulations! You've managed to guess one of the letters")
            print(f"You've already used these letters: {guess_storage}") 
  
-        if not (" □") in box:
+        if not (box_item) in box:
             print("Well done, you've won the game! To play again, press F5.") 
             sys.exit()
             
@@ -74,10 +84,8 @@ while wrong < 7:
          print("GGWP, you lost")
          sys.exit()   
  
-    if guess not in guess_storage.capitalize():
-       guess_storage = guess_storage + guess.capitalize() + ", "
-    else:
-        print("You can't use this letter anymore!\n")  
+   
+   
 
 
 
